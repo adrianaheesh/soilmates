@@ -23,8 +23,4 @@ users = [
     }
 ]
 
-# users.each do |email, password| 
-#     User.create(email: email, password: password)
-# end
-
 User.create(users)
