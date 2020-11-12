@@ -32,3 +32,10 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+# cloudinary
+cloudinary:
+  service: Cloudinary
+  cloud_name: adriana-developer
+  api_key: <%= ENV['CLOUDINARY_PUBLICKEY'] %>
+  api_secret: <%= ENV['CLOUDINARY_PRIVATEKEY'] %>
