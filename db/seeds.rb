@@ -52,59 +52,55 @@ products = [
         category: "Plant",
         light: "Bright",
         difficulty: "Plant Beginner"
+    },
+    {
+        name: "Anthurium",
+        price: 30.00,
+        description: "Super durable with minimal care required, this gorg Anthurium is bound to brighten up your space.",
+        availability: true,
+        store_id: Store.find_by_name("I Love Plants").id,
+        category: "Plant",
+        light: "Bright",
+        difficulty: "Plant Beginner"
+    },
+    {
+        name: "Copper Watering Can",
+        price: 24.99,
+        description: "1L capacity. Easily water indoor plants with the long spout that guides water flow exactly where you need it to go without spilling.",
+        availability: false,
+        store_id: Store.find_by_name("I Love Plants").id,
+        category: "Pot"
+    },
+    {
+        name: "Ivy",
+        price: 25.00,
+        description: "This climbing vine works perfectly amongst a book shelf, or cascading down the wall.",
+        availability: true,
+        store_id: Store.find_by_name("Plant Posse").id,
+        category: "Plant",
+        light: "Bright",
+        difficulty: "Have kept a few plants alive"
+    },
+    {
+        name: "Fiddle Leaf Fig",
+        price: 40.00,
+        description: "Perhaps the trendiest plant of all time, the fiddle leaf is a staple in a medium lit room and if properly cared for, can grow to touch the ceiling!",
+        availability: true,
+        store_id: Store.find_by_name("Plant Posse").id,
+        category: "Plant",
+        light: "Medium",
+        difficulty: "Have kept a few plants alive"
+    },
+    {
+        name: "Monstera Deliciozo",
+        price: 45.00,
+        description: "Otherwise known as the Swisse Cheese plant, this beauty is suitable for beginners and makes a statement in any room.",
+        availability: true,
+        store_id: Store.find_by_name("Plant Posse").id,
+        category: "Plant",
+        light: "Low",
+        difficulty: "Plant Beginner"
     }
 ]
-    # ,
-    # {
-    #     name: ,
-    #     price: ,
-    #     description: ,
-    #     availability: ,
-    #     store: 2,
-    #     category: ,
-    #     light: ,
-    #     difficulty: 
-    # },
-    # {
-    #     name: ,
-    #     price: ,
-    #     description: ,
-    #     availability: ,
-    #     store: 2,
-    #     category: ,
-    #     light: ,
-    #     difficulty: 
-    # },
-    # {
-    #     name: ,
-    #     price: ,
-    #     description: ,
-    #     availability: ,
-    #     store: 1,
-    #     category: ,
-    #     light: ,
-    #     difficulty: 
-    # },
-    # {
-    #     name: ,
-    #     price: ,
-    #     description: ,
-    #     availability: ,
-    #     store: 1,
-    #     category: ,
-    #     light: ,
-    #     difficulty: 
-    # },
-    # {
-    #     name: ,
-    #     price: ,
-    #     description: ,
-    #     availability: ,
-    #     store: 1,
-    #     category: ,
-    #     light: ,
-    #     difficulty: 
-    # }
-
 
 Product.create(products)
