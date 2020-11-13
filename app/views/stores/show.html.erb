@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <%= cl_image_tag(@store.banner.key, cloud_name: 'adriana-developer') %>
+  <%= cl_image_tag(@store.banner.key, cloud_name: 'adriana-developer') if @store.banner.attached? %>
 </p>
 
 <p>

@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@product) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :description %>
+    <%= f.input :availability, label: "Available now?" %>
+    <%= f.input :category, collection: ["Plant", "Pot", "Plant Care", "Accessories", "Tools"], as: :radio_buttons %>
+    <%= f.input :light, collection: ["Low", "Medium", "Bright"], as: :radio_buttons %>
+    <%= f.input :difficulty, collection: ["Plant Beginner", "Have kept a few plants alive", "Full blown #plantfluencer"], as: :radio_buttons %>
+    <%= f.input :price %>
+    <%= f.file_field :image, accept: 'image/png, image/jpg, image/jpeg' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

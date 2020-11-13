@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  availability: false
+  category: MyString
+  light: MyString
+  difficulty: MyString
+  price: 1.5
+  store: one
+
+two:
+  name: MyString
+  description: MyText
+  availability: false
+  category: MyString
+  light: MyString
+  difficulty: MyString
+  price: 1.5
+  store: two
