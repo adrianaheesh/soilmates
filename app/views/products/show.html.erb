@@ -40,5 +40,27 @@
   <%= @product.store_id %>
 </p>
 
+<p>
+  <%= link_to "Buy Now", buy_path, method: :post %>
+</p>
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+	const stripe = Stripe('<%= ENV["STRIPE_PUBLICKEY"] %>')
+	const buyButton = document.getElementById('buy-now-button')
+
+	buyButton.addEventListener('click', function() {
+		fetch('<%= buy_path(@product.id) %>'), { 
+			method: 'POST'
+		})
+		.then(function(response) {
+			return response.json()
+		})
+		.then(function(session) {
+			return stripe.redirectToCheckout({ sessionId: session.id })
+		}) 
+	})
+</script>
+
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

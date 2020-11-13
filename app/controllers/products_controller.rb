@@ -1,28 +1,20 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :buy]
 
-  # GET /products
-  # GET /products.json
   def index
     @products = Product.all
   end
 
-  # GET /products/1
-  # GET /products/1.json
   def show
   end
 
-  # GET /products/new
   def new
     @product = Product.new
   end
 
-  # GET /products/1/edit
   def edit
   end
 
-  # POST /products
-  # POST /products.json
   def create
     @product = Product.new(product_params)
     @product.store_id = current_user.store.id
@@ -39,8 +31,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
   def update
     respond_to do |format|
       if @product.update(product_params)
@@ -53,8 +43,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
     @product.destroy
     respond_to do |format|
@@ -63,13 +51,46 @@ class ProductsController < ApplicationController
     end
   end
 
+  def buy
+    Stripe.api_key = ENV['STRIPE_PRIVATEKEY']
+    session = Stripe::Checkout::Session.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      success_url: success_url(params[:id]), 
+      cancel_url: cancel_url(params[:id]),
+      # what is being bought
+      line_items: [ 
+        {
+          price_data: {
+            currency: 'aud',
+            product_data: {
+              name: @product.name,
+              description: @product.description,
+            },
+            unit_amount: (@product.price.to_f * 100).to_i  
+          },
+          quantity: 1
+        }
+      ]
+    })
+  
+    render json: session
+  end
+
+  def success
+    render plain: "Success!"
+  end
+  
+  def cancel
+    render plain: "Transaction cancelled."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:name, :description, :availability, :category, :light, :difficulty, :price, :store_id, :image)
     end
