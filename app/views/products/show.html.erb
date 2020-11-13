@@ -41,7 +41,7 @@
 </p>
 
 <p>
-  <%= link_to "Buy Now", buy_path, method: :post %>
+  <button id="buy-now-button">Buy Now</button>
 </p>
 <script src="https://js.stripe.com/v3/"></script>
 
@@ -50,7 +50,7 @@
 	const buyButton = document.getElementById('buy-now-button')
 
 	buyButton.addEventListener('click', function() {
-		fetch('<%= buy_path(@product.id) %>'), { 
+		fetch('<%= buy_path(@product.id) %>', { 
 			method: 'POST'
 		})
 		.then(function(response) {

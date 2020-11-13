@@ -64,8 +64,8 @@ class ProductsController < ApplicationController
           price_data: {
             currency: 'aud',
             product_data: {
-              name: @product.name,
-              description: @product.description,
+              name: "Plant",
+              description: "A plant you want to own",
             },
             unit_amount: (@product.price.to_f * 100).to_i  
           },
