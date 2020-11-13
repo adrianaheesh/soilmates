@@ -51,7 +51,7 @@
 
 	buyButton.addEventListener('click', function() {
 		fetch('<%= buy_path(@product.id) %>', { 
-			method: 'POST'
+			method: 'GET'
 		})
 		.then(function(response) {
 			return response.json()

@@ -78,11 +78,9 @@ class ProductsController < ApplicationController
   end
 
   def success
-    render plain: "Success!"
   end
   
   def cancel
-    render plain: "Transaction cancelled."
   end
 
   private
