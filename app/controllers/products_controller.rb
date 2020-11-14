@@ -1,11 +1,13 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :buy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :buy, :favorite]
+  before_action :authenticate_user!, only: :update
 
   def index
     @products = Product.all
   end
 
   def show
+    @favorite_exists = Favorite.where(product: @product, user: current_user) == [] ? false : true
   end
 
   def new
@@ -18,7 +20,6 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.store_id = current_user.store.id
-    p current_user.store
 
     respond_to do |format|
       if @product.save

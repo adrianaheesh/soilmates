@@ -1,28 +1,20 @@
 class StoresController < ApplicationController
   before_action :set_store, only: [:show, :edit, :update, :destroy]
 
-  # GET /stores
-  # GET /stores.json
   def index
     @stores = Store.all
   end
 
-  # GET /stores/1
-  # GET /stores/1.json
   def show
   end
 
-  # GET /stores/new
   def new
     @store = Store.new
   end
 
-  # GET /stores/1/edit
   def edit
   end
 
-  # POST /stores
-  # POST /stores.json
   def create
     @store = Store.new(store_params)
     @store.user_id = current_user.id
@@ -37,8 +29,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # PATCH/PUT /stores/1
-  # PATCH/PUT /stores/1.json
   def update
     respond_to do |format|
       if @store.update(store_params)
@@ -51,8 +41,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # DELETE /stores/1
-  # DELETE /stores/1.json
   def destroy
     @store.destroy
     respond_to do |format|
