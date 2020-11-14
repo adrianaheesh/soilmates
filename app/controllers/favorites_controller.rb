@@ -1,4 +1,13 @@
 class FavoritesController < ApplicationController
+  def index
+    favorites = current_user.favorites.pluck(:product_id)
+    @user_favorites = []
+    
+    favorites.each do |id|
+      @user_favorites.push(Product.find(id))
+    end
+  end
+  
   def update
     favorite = Favorite.where(product: Product.find(params[:product]), user: current_user)
     p favorite

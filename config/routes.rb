@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'favorites/update', to: 'favorites#update'
+  get 'favorites/index', to: 'favorites#index', as: 'favorites'
   resources :products
   resources :stores
   devise_for :users

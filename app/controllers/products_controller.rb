@@ -1,9 +1,10 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :buy, :favorite]
-  before_action :authenticate_user!, only: :update
+  before_action :authenticate_user!, except: [:index, :show, :buy, :success, :cancel]
 
   def index
     @products = Product.all
+    pp @products
   end
 
   def show

@@ -1,0 +1,10 @@
+<h1>Your Favourites</h1>
+
+<% if @user_favorites == nil %>
+    <p><%= "You don't have any favourites yet." %></p>
+    <%= link_to "Continue shopping", products_path %>
+<% else %>
+    <% @user_favorites.each do |product| %>
+        <%= link_to product.name, product_path(product.id) %>
+    <% end %>
+<% end %>
