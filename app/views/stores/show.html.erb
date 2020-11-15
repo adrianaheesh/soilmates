@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <%= cl_image_tag(@store.banner.key, cloud_name: 'adriana-developer') if @store.banner.attached? %>
 </p>
@@ -14,10 +12,24 @@
   <%= @store.description %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @store.user_id %>
-</p>
-
 <%= link_to 'Edit', edit_store_path(@store) %> |
 <%= link_to 'Back', stores_path %>
+
+<hr>
+
+
+<% @store.store_reviews.each do |review| %>
+  <p>Rating: <%= review.rating %></p>
+ <p><%= review.comment %></p>
+<% end %>
+
+<% if user_signed_in? %>
+<p>
+  Leave a review:
+</p>
+  <%= simple_form_for [@store, @store_review], local: true do |f| %> 
+    <%= f.input :rating, as: :integer, collection: ["1","2","3","4","5"], as: :radio_buttons, class: "form-check form-check-inline" %>
+    <%= f.input :comment %>
+    <%= f.button :submit, label: "Submit your review" %>
+  <% end %>
+<% end %>

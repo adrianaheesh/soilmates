@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   has_one :store, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :store_reviews, dependent: :destroy
 end
 

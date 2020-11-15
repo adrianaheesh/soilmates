@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <%= cl_image_tag(@product.image.key, crop: :scale, width: 600, cloud_name: 'adriana-developer') if @product.image.attached? %>
 </p>

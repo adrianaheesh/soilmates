@@ -6,6 +6,8 @@ class StoresController < ApplicationController
   end
 
   def show
+    @store_review = StoreReview.new 
+    @store_reviews = @store.store_reviews.order("created at DESC")
   end
 
   def new
