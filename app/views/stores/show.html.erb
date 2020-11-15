@@ -12,24 +12,32 @@
   <%= @store.description %>
 </p>
 
+<% if @store_average_rating >= 0 %>
+  <p>
+    <strong>Average rating:</strong>
+    <%= @store_average_rating %>
+    from <%= pluralize(@store.store_reviews.count, "review") %>.
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_store_path(@store) %> |
 <%= link_to 'Back', stores_path %>
 
-<hr>
-
 
 <% @store.store_reviews.each do |review| %>
+<hr>
   <p>Rating: <%= review.rating %></p>
  <p><%= review.comment %></p>
 <% end %>
 
 <% if user_signed_in? %>
+<hr>
 <p>
   Leave a review:
 </p>
   <%= simple_form_for [@store, @store_review], local: true do |f| %> 
     <%= f.input :rating, as: :integer, collection: ["1","2","3","4","5"], as: :radio_buttons, class: "form-check form-check-inline" %>
-    <%= f.input :comment %>
-    <%= f.button :submit, label: "Submit your review" %>
+    <%= f.input :comment, label: "Comments:" %>
+    <%= f.button :submit %>
   <% end %>
 <% end %>

@@ -7,7 +7,10 @@ class StoresController < ApplicationController
 
   def show
     @store_review = StoreReview.new 
-    @store_reviews = @store.store_reviews.order("created at DESC")
+    @store_reviews = @store.store_reviews
+    @store_ratings = @store.store_reviews.select(:rating)
+    all_ratings = @store.store_reviews.pluck(:rating)
+    @store_average_rating = (all_ratings.sum.to_f / all_ratings.length)
   end
 
   def new

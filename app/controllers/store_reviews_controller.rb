@@ -7,7 +7,6 @@ class StoreReviewsController < ApplicationController
     @store_review.user = current_user
     @store_review.save
     redirect_back(fallback_location: root_path)
-    # @store_ratings = @store_reviews.pluck[:rating.to_i]
   end
 
   private
