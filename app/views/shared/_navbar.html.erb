@@ -4,9 +4,9 @@
     </li>
 
     <% if user_signed_in? %>
-        <% if @current_users_store %>
+        <% if @user_owns_a_store %>
             <li class="nav-item">
-                <%= link_to "Manage your store", store_path(@current_users_store), class: "nav-link" %>
+                <%= link_to "Manage your store", store_path(current_user.store), class: "nav-link" %>
             </li>
         <% else %>
             <li class="nav-item">

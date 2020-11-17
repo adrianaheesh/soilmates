@@ -1,33 +1,49 @@
+<h2><%= @store.name %></h2>
 <p>
   <%= cl_image_tag(@store.banner.key, cloud_name: 'adriana-developer') if @store.banner.attached? %>
 </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @store.name %>
-</p>
+  
 
 <p>
-  <strong>Description:</strong>
   <%= @store.description %>
 </p>
 
 <% if @store_average_rating >= 0 %>
   <p>
     <strong>Average rating:</strong>
-    <%= @store_average_rating %>
+    <%= @store_average_rating%>/5
     from <%= pluralize(@store.store_reviews.count, "review") %>.
   </p>
 <% end %>
 
+<h4>Products:</h4>
+<% if @store.products.count == 0 %>
+  <p>This store doesn't have any products.</p>
+<% end %>
+<br><br>
+<div class="card-container">
+  <% @store.products.each do |product| %>
+      <div class="card" style="width: 18rem;">
+        <%= cl_image_tag(product.image.key, crop: :scale, cloud_name: 'adriana-developer', class: "card-img-top") if product.image.attached? %>
+        <div class="card-body">
+          <h5 class="card-title"><%= product.name %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= product.availability ? "In stock" : "Sold out" %></h6>
+          <%= link_to_if product.availability, 'Shop', product %>
+        </div>
+      </div>
+  <% end %>
+</div>
 
+<br><br>
+<h4><%= @store.name %> Reviews:</h4>
 <% @store.store_reviews.each do |review| %>
 <hr>
 <p>Rating: <%= review.rating %></p>
 <p><%= review.comment %></p>
 <% end %>
 
-<% if @current_users_store %>
+<% if user_signed_in? && current_user.store.id == @store.id %>
   <%= link_to 'Edit your store', edit_store_path(@store) %>
 <% end %>
 
