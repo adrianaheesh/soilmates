@@ -36,10 +36,4 @@ class ApplicationController < ActionController::Base
     #       pp @current_users_store
     #     end
     #   end
-
-
-      # check if a user is signed
-      # check if the signed in user has a store
-      # if they have a store, set the current_user.store.id
- 
   end

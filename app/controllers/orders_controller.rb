@@ -1,9 +1,7 @@
 class OrdersController < ApplicationController
   def index
-    if @current_users_store
-      @orders = Order.where(store_id: @current_users_store.id).find
-    else
-      @orders = Order.where(user_id: current_user.id)
+    if user_signed_in? && @user_has_a_store?
+      @orders = Order.where(store_id: current_user.store.id)
     end
   end
 
@@ -23,12 +21,18 @@ class OrdersController < ApplicationController
   #   status 200
   # end
 
-  # def update
-  #   @order = Order.where(user_id: current_user.id)
-  #   @order.update(paid_status: true)
-  # end
+  def update
+    @order.update(order_params)
+  end
 
-  # def show
-  # end
+  def show
+    @order.find(params[:id])
+  end
+
+  private
+  def order_params
+    params.require(:order).permit(:store_id, :user_id, :paid_status, :completed)
+  end
+
 
 end
