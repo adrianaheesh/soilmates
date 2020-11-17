@@ -1,18 +1,9 @@
 class StoresController < ApplicationController
   before_action :set_store, except: [:new, :index, :create]
-
-  #redirecting users who are not the owners of the store (only user who owns the store can perform these actions)
-  before_action :redirect_if_not_store_owner, only: [:edit, :update, :destroy]
-
-  #setting the user id of the store owner
   before_action :set_store_owner, except: [:new, :index, :create]
-
-  #ensuring only users with an account can create a store
   before_action :authenticate_user!, only: [:new, :create]
-
-  #redirecting store owners who attempt to make a second store (only one store per user)
+  before_action :redirect_if_not_store_owner, only: [:edit, :update, :destroy]
   before_action :redirect_if_user_has_store, only: [:new]
-
 
   def index
     @stores = Store.all
@@ -27,9 +18,7 @@ class StoresController < ApplicationController
   end
 
   def new
-    if !@store_owner
-      @store = Store.new
-    end
+    @store = Store.new
   end
 
   def edit
@@ -82,18 +71,19 @@ class StoresController < ApplicationController
 
     # stops user from creating more than one store
     def redirect_if_user_has_store
-      if @current_users_store
-        redirect_to @current_users_store, notice: 'Sorry, you already have a store'
+      if @user_owns_a_store
+        redirect_to current_user.store, notice: 'Sorry, you already have a store'
       end
     end
     
-    # stops user from acessing store that isn't theirs
     def redirect_if_not_store_owner
-      redirect_action = redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
-      if @user_owns_a_store == false 
-        redirect_action
-      else @store.id != @current_users_store.id
-        redirect_action
+      # redirect users who dont have a store
+      if @user_owns_a_store == false
+        redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
+      end
+      # redirect users who don't own the store
+      if user_signed_in? && @store.id != current_user.store.id
+        redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
       end
     end
 

@@ -10,15 +10,16 @@ class ProductsController < ApplicationController
   # redirect if user is not the store manager for the product
   before_action :redirect_non_store_owner, only: [:edit, :udpate, :destroy]
 
+  # make sure user creates a store before creating products
+  before_action :check_user_has_store, only: [:new, :create]
+
   def index
-    puts "YOYOY"
-    p current_user.store
+    puts "index"
+    p current_user.store if user_signed_in?
     @products = Product.all
   end
 
   def show
-    puts "YOYOY"
-    p current_user.store.id
     @favorite_exists = Favorite.where(product: @product, user: current_user) == [] ? false : true
   end
 
@@ -102,18 +103,23 @@ class ProductsController < ApplicationController
     def set_products_store
       store_id_of_product = @product.store_id
       @store_that_owns_product = Store.find(store_id_of_product)
-      puts "YOOOO"
-      pp @store_that_owns_product
-      pp @store_that_owns_product.user_id
     end
 
     def redirect_non_store_owner
-      redirect_action = redirect_to products_path, notice: 'Sorry, only the store owner can do this'
-      if @user_owns_a_store == false # does the user own a store
-        redirect_action
-      else @store_that_owns_product.user_id != current_user.id
-        puts "HEYO"
-        redirect_action
+      if @user_owns_a_store == false 
+        # if the current user has no store, redirect them
+        redirect_to products_path, notice: 'Sorry, only the store owner can do this'
+      end
+      if user_signed_in? && @store_that_owns_product.user_id != current_user.id
+        # if the current user's store id doesn't match the products store id, redirect
+        redirect_to products_path, notice: 'Sorry, only the store owner can do this'
+      end
+    end
+
+    def check_user_has_store
+      # ensure a user creates a store before creating a product
+      if @user_owns_a_store == false
+        redirect_to new_store_path, notice: 'Please create a store to start selling'
       end
     end
 
