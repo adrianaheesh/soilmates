@@ -37,8 +37,9 @@
   Leave a review:
 </p>
   <%= simple_form_for [@store, @store_review], local: true do |f| %> 
-    <%= f.input :rating, as: :integer, collection: ["1","2","3","4","5"], as: :radio_buttons, class: "form-check form-check-inline" %>
-    <%= f.input :comment, label: "Comments:" %>
-    <%= f.button :submit %>
+    <%= f.error_notification %>
+    <%= f.input :rating, as: :integer, collection: ["1","2","3","4","5"], as: :radio_buttons, error: "You must provide a rating" %>
+    <%= f.input :comment, label: "Comments:", error: "You must provide a comment" %>
+    <%= f.button :submit, "Leave your review" %>
   <% end %>
 <% end %>
