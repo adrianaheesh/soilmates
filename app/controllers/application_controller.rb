@@ -10,20 +10,22 @@ class ApplicationController < ActionController::Base
     helper_method :favorite_text
 
     private
+    # returns true if the current user has a store
     def set_user_owns_a_store
-        # returns true if the current user has a store
         @user_owns_a_store = false
-        if user_signed_in? && @current_user_store && current_user.id == @current_user_store.user_id
+        # if user_signed_in? && @current_users_store 
+        if @current_users_store != nil
+            # && current_user.id == @current_users_store.user_id
             @user_owns_a_store = true
         end
     end
 
-    # return the current users store
+    # return the current users store or nil if none
     def set_current_users_store
         if user_signed_in?
           @current_users_store = Store.find_by_user_id(current_user.id)
           puts "EYEY"
-          pp @current_users_store # currently = 32 aka Plant Posse
+          pp @current_users_store
         end
       end
   end

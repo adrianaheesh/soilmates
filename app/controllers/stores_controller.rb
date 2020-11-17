@@ -87,12 +87,11 @@ class StoresController < ApplicationController
     end
     
     def redirect_if_not_store_owner
-      puts "HEREERE"
-      pp @current_users_store.user_id
-      pp current_user.id
-      # if @current_users_store.user_id != current_user.id
-      if @store.id != @current_users_store.id
-        redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
+      redirect_action = redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
+      if @user_owns_a_store == false 
+        redirect_action
+      else @store.id != @current_users_store.id
+        redirect_action
       end
     end
 

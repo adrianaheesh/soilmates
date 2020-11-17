@@ -15,7 +15,7 @@
         <td><%= store.name %></td>
         <td><%= store.description %></td>
         <td><%= link_to 'Show', store %></td>
-        <% if user_signed_in? && store.id == @current_users_store.id %>
+        <% if @user_owns_a_store && store.id == @current_users_store.id %>
           <td><%= link_to 'Edit', edit_store_path(store) %></td>
           <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>

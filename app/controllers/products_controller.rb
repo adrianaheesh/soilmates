@@ -77,11 +77,10 @@ class ProductsController < ApplicationController
         })
         
         render json: session
-    # return @order
   end
 
-  def success
-  end
+  # def success
+  # end
   
   def cancel
   end
