@@ -80,12 +80,14 @@ class StoresController < ApplicationController
       @store_owner = @store.user_id
     end
 
+    # stops user from creating more than one store
     def redirect_if_user_has_store
       if @current_users_store
         redirect_to @current_users_store, notice: 'Sorry, you already have a store'
       end
     end
     
+    # stops user from acessing store that isn't theirs
     def redirect_if_not_store_owner
       redirect_action = redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
       if @user_owns_a_store == false 

@@ -1,13 +1,24 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :buy, :favorite]
-  before_action :authenticate_user!, except: [:index, :show, :buy, :success, :cancel]
+  
+  # set the store that owns the product
+  before_action :set_products_store, only: [:show, :edit, :update, :destroy, :buy, :favorite]
+
+  # user must be signed in for everything except show and index
+  before_action :authenticate_user!, except: [:index, :show]
+
+  # redirect if user is not the store manager for the product
+  before_action :redirect_non_store_owner, only: [:edit, :udpate, :destroy]
 
   def index
-    pp current_user
+    puts "YOYOY"
+    p current_user.store
     @products = Product.all
   end
 
   def show
+    puts "YOYOY"
+    p current_user.store.id
     @favorite_exists = Favorite.where(product: @product, user: current_user) == [] ? false : true
   end
 
@@ -78,9 +89,6 @@ class ProductsController < ApplicationController
         
         render json: session
   end
-
-  # def success
-  # end
   
   def cancel
   end
@@ -89,6 +97,24 @@ class ProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
+    end
+
+    def set_products_store
+      store_id_of_product = @product.store_id
+      @store_that_owns_product = Store.find(store_id_of_product)
+      puts "YOOOO"
+      pp @store_that_owns_product
+      pp @store_that_owns_product.user_id
+    end
+
+    def redirect_non_store_owner
+      redirect_action = redirect_to products_path, notice: 'Sorry, only the store owner can do this'
+      if @user_owns_a_store == false # does the user own a store
+        redirect_action
+      else @store_that_owns_product.user_id != current_user.id
+        puts "HEYO"
+        redirect_action
+      end
     end
 
     def product_params
