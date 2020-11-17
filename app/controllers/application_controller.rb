@@ -22,6 +22,8 @@ class ApplicationController < ActionController::Base
     def set_current_users_store
         if user_signed_in?
           @current_users_store = Store.find_by_user_id(current_user.id)
+          puts "EYEY"
+          pp @current_users_store # currently = 32 aka Plant Posse
         end
       end
   end

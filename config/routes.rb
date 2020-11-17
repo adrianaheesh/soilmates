@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :stores do
     post 'store_reviews', to: 'store_reviews#create'
   end
-  resources :order_products
   devise_for :users
   root to: 'home#page'
   get '/products/:id/buy', to: 'products#buy', as: 'buy'

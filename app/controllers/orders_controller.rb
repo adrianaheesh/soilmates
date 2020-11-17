@@ -1,20 +1,20 @@
 class OrdersController < ApplicationController
   def index
     if @current_users_store
-      @orders = Order.where(store_id: @current_users_store.id)
+      @orders = Order.where(store_id: @current_users_store.id).find
     else
       @orders = Order.where(user_id: current_user.id)
     end
   end
 
   def success
-    @order = Order.create(user_id: current_user.id)
-    @product = Product.find(params[:id])
-    @order.store_id = @product.store_id
-    puts "HERE"
-    pp @order
-
-    @order_products = OrderProducts.create(order_id: @order.id, product_id: params[:id], quantity: 1, total: params[:id].price)
+    @order = Order.new(user_id: current_user.id)
+    #assign product to the order for the view
+    @order_product = Product.find(params[:id])
+    @order.store_id = @order_product.store_id
+    @order.save
+    # update product so no longer available
+    @order_product.update(availability: false)
   end
 
   # def webhook
@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   #   @order.update(paid_status: true)
   # end
 
-  def show
-  end
+  # def show
+  # end
 
 end

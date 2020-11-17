@@ -2,6 +2,20 @@
 
 <p>Thanks for shopping with Soilmates!</p>
 
+<p>Your order details:</p>
+
+<p>
+
+</p>
+<p>
+    <%= @order_product.name %>
+</p>
+<p>
+    <%= @order_product.image if @order_product.image.attached? %>
+</p>
+<p>
+    <%= @order_product.description %>
+</p>
 <p>
     <%= link_to "Continue shopping", products_path %>
 </p>

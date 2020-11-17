@@ -1,20 +1,18 @@
 class StoresController < ApplicationController
   before_action :set_store, except: [:new, :index, :create]
 
+  #redirecting users who are not the owners of the store (only user who owns the store can perform these actions)
+  before_action :redirect_if_not_store_owner, only: [:edit, :update, :destroy]
+
   #setting the user id of the store owner
   before_action :set_store_owner, except: [:new, :index, :create]
 
-  #setting the current users store
-  # before_action :set_current_users_store
-
-  #only users with accounts can create a new store
+  #ensuring only users with an account can create a store
   before_action :authenticate_user!, only: [:new, :create]
 
-  #redirecting store owners who attempt to make a second store
+  #redirecting store owners who attempt to make a second store (only one store per user)
   before_action :redirect_if_user_has_store, only: [:new]
 
-  #redirecting users who are not the owners of the store
-  before_action :redirect_if_not_store_owner, only: [:edit, :update, :destroy]
 
   def index
     @stores = Store.all
@@ -82,13 +80,6 @@ class StoresController < ApplicationController
       @store_owner = @store.user_id
     end
 
-    # # return the current users store
-    # def set_current_users_store
-    #   if user_signed_in?
-    #     @current_users_store = Store.find_by_user_id(current_user.id)
-    #   end
-    # end
-
     def redirect_if_user_has_store
       if @current_users_store
         redirect_to @current_users_store, notice: 'Sorry, you already have a store'
@@ -96,7 +87,11 @@ class StoresController < ApplicationController
     end
     
     def redirect_if_not_store_owner
-      if @current_users_store != current_user.id
+      puts "HEREERE"
+      pp @current_users_store.user_id
+      pp current_user.id
+      # if @current_users_store.user_id != current_user.id
+      if @store.id != @current_users_store.id
         redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
       end
     end
