@@ -1,5 +1,20 @@
 class StoresController < ApplicationController
-  before_action :set_store, only: [:show, :edit, :update, :destroy]
+  before_action :set_store, except: [:new, :index, :create]
+
+  #setting the user id of the store owner
+  before_action :set_store_owner, except: [:new, :index, :create]
+
+  #setting the current users store
+  # before_action :set_current_users_store
+
+  #only users with accounts can create a new store
+  before_action :authenticate_user!, only: [:new, :create]
+
+  #redirecting store owners who attempt to make a second store
+  before_action :redirect_if_user_has_store, only: [:new]
+
+  #redirecting users who are not the owners of the store
+  before_action :redirect_if_not_store_owner, only: [:edit, :update, :destroy]
 
   def index
     @stores = Store.all
@@ -14,7 +29,9 @@ class StoresController < ApplicationController
   end
 
   def new
-    @store = Store.new
+    if !@store_owner
+      @store = Store.new
+    end
   end
 
   def edit
@@ -60,7 +77,30 @@ class StoresController < ApplicationController
       @store = Store.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    #assigns the owner of the current store (based on params)
+    def set_store_owner
+      @store_owner = @store.user_id
+    end
+
+    # # return the current users store
+    # def set_current_users_store
+    #   if user_signed_in?
+    #     @current_users_store = Store.find_by_user_id(current_user.id)
+    #   end
+    # end
+
+    def redirect_if_user_has_store
+      if @current_users_store
+        redirect_to @current_users_store, notice: 'Sorry, you already have a store'
+      end
+    end
+    
+    def redirect_if_not_store_owner
+      if @current_users_store != current_user.id
+        redirect_to stores_path, notice: 'Sorry, only the store owner can do this'
+      end
+    end
+
     def store_params
       params.require(:store).permit(:name, :description, :user_id, :banner)
     end

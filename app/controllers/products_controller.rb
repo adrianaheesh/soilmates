@@ -3,8 +3,8 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :buy, :success, :cancel]
 
   def index
+    pp current_user
     @products = Product.all
-    pp @products
   end
 
   def show
@@ -53,30 +53,31 @@ class ProductsController < ApplicationController
     end
   end
 
-  def buy
-    Stripe.api_key = ENV['STRIPE_PRIVATEKEY']
-    session = Stripe::Checkout::Session.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      success_url: success_url(params[:id]), 
-      cancel_url: cancel_url(params[:id]),
-      # what is being bought
-      line_items: [ 
-        {
-          price_data: {
-            currency: 'aud',
-            product_data: {
-              name: "Plant",
-              description: "A plant you want to own",
+  def buy      
+      Stripe.api_key = ENV['STRIPE_PRIVATEKEY']
+      session = Stripe::Checkout::Session.create({
+        payment_method_types: ['card'],
+        mode: 'payment',
+        success_url: success_url(params[:id]), 
+        cancel_url: cancel_url(params[:id]),
+        # what is being bought
+        line_items: [ 
+          {
+            price_data: {
+              currency: 'aud',
+              product_data: {
+                name: @product.name,
+                description: @product.description,
+              },
+              unit_amount: (@product.price.to_f * 100).to_i  
             },
-            unit_amount: (@product.price.to_f * 100).to_i  
-          },
-          quantity: 1
-        }
-      ]
-    })
-  
-    render json: session
+            quantity: 1
+          }
+        ]
+        })
+        
+        render json: session
+    # return @order
   end
 
   def success

@@ -1,4 +1,4 @@
-class FavoritesController < ApplicationController
+class FavoritesController < ApplicationController  
   def index
     favorites = current_user.favorites.pluck(:product_id)
     @user_favorites = []
@@ -9,17 +9,17 @@ class FavoritesController < ApplicationController
   end
   
   def update
-    favorite = Favorite.where(product: Product.find(params[:product]), user: current_user)
-    p favorite
-    if favorite == []
+    favorite = Favorite.where(product: Product.find(params[:product]), user: current_user).first
+    if !favorite
       #create favourite
       Favorite.create(product: Product.find(params[:product]), user: current_user)
       @favorite_exists = true
     else
-      # delete favourite(s)
-      Favorite.destroy_all
+      #delete the favourite
+      favorite.destroy
       @favorite_exists = false
     end
+
 
     respond_to do |format|
       format.html {}

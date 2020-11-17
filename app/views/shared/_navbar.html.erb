@@ -1,0 +1,30 @@
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+      <%= link_to "Shop", products_path, class: "nav-link" %>
+    </li>
+
+    <% if user_signed_in? %>
+        <% if @current_users_store %>
+            <li class="nav-item">
+                <%= link_to "Manage your store", store_path(@current_users_store), class: "nav-link" %>
+            </li>
+        <% else %>
+            <li class="nav-item">
+                <%= link_to "Create a store", new_store_path, class: "nav-link" %>
+            </li>
+        <% end %>
+    <li class="nav-item">
+        <%= link_to "Your favourites", favorites_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+        <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+    </li>
+    <% else %>
+        <li class="nav-item">
+            <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+            <%= link_to "Create account", new_user_registration_path, class: "nav-link" %>
+        </li>
+    <% end %>
+  </ul>

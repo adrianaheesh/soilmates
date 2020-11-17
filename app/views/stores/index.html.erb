@@ -13,17 +13,19 @@
 
   <tbody>
     <% @stores.each do |store| %>
-        <tr>
-          <td><%= store.name %></td>
-          <td><%= store.description %></td>
-          <td><%= link_to 'Show', store %></td>
+      <tr>
+        <td><%= store.name %></td>
+        <td><%= store.description %></td>
+        <td><%= link_to 'Show', store %></td>
+        <% if user_signed_in? && store.id == @current_users_store.id %>
           <td><%= link_to 'Edit', edit_store_path(store) %></td>
           <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
+        <% end %>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Store', new_store_path %>
+<%= link_to 'Create a new store', new_store_path if @user_owns_a_store == false %>

@@ -3,9 +3,11 @@
 </p>
 
 <p>
-  <button>
-    <%= link_to favorite_text, favorites_update_path(product: @product), id: 'favorite_link', remote: true %>
-  </button>
+  <% if user_signed_in? %>
+    <button>
+      <%= link_to favorite_text, favorites_update_path(product: @product), id: 'favorite_link', remote: true %>
+    </button>
+  <% end %>
 </p>
 
 <h2>
@@ -26,17 +28,18 @@
 </p>
 
 <p>
-  <% if @product.light == !nil %>
-    <%= @product.light %>
-  <% end %>
+  <% @product.light if @product.light != nil %>
 </p>
 
 <!-- make a partial for a difficulty scale? -->
 <p>
-  <% if @product.difficulty == !nil %>
-    <%= @product.difficulty %>
-  <% end %>
+  <% @product.difficulty if @product.difficulty != nil %>
 </p>
+
+<% if @user_owns_a_store == true %>
+  <td><%= link_to 'Edit', edit_product_path(@product) %></td>
+  <td><%= link_to 'Destroy', @product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% end %>
 
 
 <p>
@@ -46,6 +49,11 @@
 
 <p>
   <% if @product.availability == true %>
+      <%= form_with model: @order_product, url: order_products_path do |f| %>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <%= f.submit "Add to cart" %>
+      <% end %>
+
     <button id="buy-now-button">Buy Now</button>
   <% else %>
     Product sold out.
@@ -71,5 +79,4 @@
 	})
 </script>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

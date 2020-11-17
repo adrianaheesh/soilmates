@@ -20,17 +20,18 @@
   </p>
 <% end %>
 
-<%= link_to 'Edit', edit_store_path(@store) %> |
-<%= link_to 'Back', stores_path %>
-
 
 <% @store.store_reviews.each do |review| %>
 <hr>
-  <p>Rating: <%= review.rating %></p>
- <p><%= review.comment %></p>
+<p>Rating: <%= review.rating %></p>
+<p><%= review.comment %></p>
 <% end %>
 
-<% if user_signed_in? %>
+<% if @current_users_store %>
+  <%= link_to 'Edit your store', edit_store_path(@store) %>
+<% end %>
+
+<% if user_signed_in? && !@current_users_store %>
 <hr>
 <p>
   Leave a review:
