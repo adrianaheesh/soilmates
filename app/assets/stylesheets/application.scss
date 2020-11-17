@@ -21,3 +21,11 @@
         background-color: pink;
     }
 }
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    .card-image {
+        max-width: 100%;
+    }
+}

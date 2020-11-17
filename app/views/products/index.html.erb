@@ -1,29 +1,16 @@
-<h1>Products</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Light</th>
-      <th>Difficulty</th>
-      <th>Price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product| %>
-        <% if product.availability == true %>
-        <tr>
-          <td><%= product.name %></td>
-          <td><%= product.category %></td>
-          <td><%= product.light %></td>
-          <td><%= product.difficulty %></td>
-          <td><%= product.price %></td>
-          <td><%= link_to 'Shop this item', product %></td>
-        </tr>
-      <% end %>
+<h1>Shop all</h1>
+ 
+<br><br>
+<div class="card-container">
+  <% @products.each do |product| %>
+    <% if product.availability == true %>
+      <div class="card" style="width: 18rem;">
+        <%= cl_image_tag(product.image.key, crop: :scale, cloud_name: 'adriana-developer', class: "card-img-top") if product.image.attached? %>
+        <div class="card-body">
+          <h5 class="card-title"><%= product.name %></h5>
+          <%= link_to 'Shop', product %>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+</div>
