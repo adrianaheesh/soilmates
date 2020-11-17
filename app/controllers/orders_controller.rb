@@ -1,9 +1,9 @@
 class OrdersController < ApplicationController
-  def index
-    if user_signed_in? && @user_has_a_store?
-      @orders = Order.where(store_id: current_user.store.id)
-    end
-  end
+  # def index
+  #   if @user_has_a_store
+  #     @orders = Order.where(store_id: current_user.store.id)
+  #   end
+  # end
 
   def success
     @order = Order.new(user_id: current_user.id, paid_status: true)
@@ -15,24 +15,16 @@ class OrdersController < ApplicationController
     @order_product.update(availability: false)
   end
 
-  # def webhook
-  #   payload = request.body.read
-  #   puts payload.inspect
-  #   status 200
+  # def update
+  #   @order.update(order_params)
   # end
 
-  def update
-    @order.update(order_params)
-  end
+  # def show
+  #   @order.find(params[:id])
+  # end
 
-  def show
-    @order.find(params[:id])
-  end
-
-  private
-  def order_params
-    params.require(:order).permit(:store_id, :user_id, :paid_status, :completed)
-  end
-
-
+  # private
+  # def order_params
+  #   params.require(:order).permit(:store_id, :user_id, :paid_status, :completed)
+  # end
 end
