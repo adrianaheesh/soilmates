@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
   end
 
   def success
-    @order = Order.new(user_id: current_user.id)
+    @order = Order.new(user_id: current_user.id, paid_status: true)
     #assign product to the order for the view
     @order_product = Product.find(params[:id])
     @order.store_id = @order_product.store_id
