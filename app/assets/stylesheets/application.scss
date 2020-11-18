@@ -25,6 +25,8 @@
 .card-container {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .card-image {
         max-width: 100%;
     }
@@ -37,4 +39,10 @@ a {
         color: green;
         text-decoration: underline;
     }
+}
+
+.review-card {
+    background-color: lightgrey;
+    padding: 5px;
+    border: solid 1px;
 }

@@ -3,8 +3,6 @@
   <%= cl_image_tag(@store.banner.key, cloud_name: 'adriana-developer') if @store.banner.attached? %>
 </p>
 
-  
-
 <p>
   <%= @store.description %>
 </p>
@@ -21,7 +19,7 @@
 <% if @store.products.count == 0 %>
   <p>This store doesn't have any products.</p>
 <% end %>
-<br><br>
+<br>
 <div class="card-container">
   <% @store.products.each do |product| %>
       <div class="card" style="width: 18rem;">
@@ -30,6 +28,9 @@
           <h5 class="card-title"><%= product.name %></h5>
           <h6 class="card-subtitle mb-2 text-muted"><%= product.availability ? "In stock" : "Sold out" %></h6>
           <%= link_to_if product.availability, 'Shop', product %>
+          <% if user_signed_in? && @user_owns_a_store && current_user.store.id == @store.id %>
+            <%= link_to 'Edit', edit_product_path(product) %>
+          <% end %>
         </div>
       </div>
   <% end %>
@@ -38,10 +39,12 @@
 <br><br>
 
 <% @store_reviews.each do |review| %>
-<hr>
-<p>Rating: <%= review.rating %></p>
-<p><%= review.comment %></p>
-<% end %>
+  <div class="review-card">
+    <p>Rating: <%= review.rating %></p>
+    <p><%= review.comment %></p>
+  </div>
+  <br>
+  <% end %>
 <%= will_paginate @store_reviews %>
 
 <% if user_signed_in? && current_user.store.id == @store.id %>

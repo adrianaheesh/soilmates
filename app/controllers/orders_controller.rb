@@ -12,7 +12,9 @@ class OrdersController < ApplicationController
     @order.store_id = @order_product.store_id
     @order.save
     # update product so no longer available
-    @order_product.update(availability: false)
+    # @order_product.update!(availability: false)
+    @order_product.availability = false
+    @order_product.save
   end
 
   # def update

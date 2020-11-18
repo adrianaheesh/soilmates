@@ -11,7 +11,7 @@
     <%= @order_product.name %>
 </p>
 <p>
-    <%= @order_product.image if @order_product.image.attached? %>
+    <%= cl_image_tag(@order_product.image.key, crop: :scale, cloud_name: 'adriana-developer', class: "card-img-top") if @order_product.image.attached? %>
 </p>
 <p>
     <%= @order_product.description %>
