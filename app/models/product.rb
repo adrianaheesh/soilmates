@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   belongs_to :store
   has_one_attached :image, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  
+  self.per_page = 12
 
   validates :name, 
             presence: true

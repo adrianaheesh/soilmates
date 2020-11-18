@@ -5,6 +5,8 @@ class Store < ApplicationRecord
   has_one_attached :banner, dependent: :destroy
   has_many :orders, dependent: :destroy
 
+  self.per_page = 6
+
   validates :name, 
             presence: true,
             uniqueness: true,

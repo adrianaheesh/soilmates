@@ -36,18 +36,19 @@
 </div>
 
 <br><br>
-<h4><%= @store.name %> Reviews:</h4>
-<% @store.store_reviews.each do |review| %>
+
+<% @store_reviews.each do |review| %>
 <hr>
 <p>Rating: <%= review.rating %></p>
 <p><%= review.comment %></p>
 <% end %>
+<%= will_paginate @store_reviews %>
 
 <% if user_signed_in? && current_user.store.id == @store.id %>
   <%= link_to 'Edit your store', edit_store_path(@store) %>
 <% end %>
 
-<% if user_signed_in? && !@current_users_store %>
+<% if user_signed_in? && current_user.store.id != @store.id %>
 <hr>
 <p>
   Leave a review:

@@ -33,6 +33,7 @@ gem 'simple_form'
 gem 'devise'
 gem "cloudinary", "~> 1.18"
 gem "activestorage-cloudinary-service", "~> 0.2.3"
+gem 'will_paginate', '~> 3.1.0'
 
 
 # Reduces boot times through caching; required in config/boot.rb

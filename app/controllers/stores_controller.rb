@@ -6,12 +6,13 @@ class StoresController < ApplicationController
   before_action :redirect_if_user_has_store, only: [:new]
 
   def index
-    @stores = Store.all
+    # @stores = Store.all
+    @stores = Store.paginate(page: params[:page])
   end
 
   def show
     @store_review = StoreReview.new 
-    @store_reviews = @store.store_reviews
+    @store_reviews = @store.store_reviews.paginate(page: params[:page], per_page: 3)
     @store_ratings = @store.store_reviews.select(:rating)
     all_ratings = @store.store_reviews.pluck(:rating)
     @store_average_rating = (all_ratings.sum.to_f / all_ratings.length)

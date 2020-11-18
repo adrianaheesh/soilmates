@@ -14,9 +14,11 @@ class ProductsController < ApplicationController
   before_action :check_user_has_store, only: [:new, :create]
 
   def index
-    puts "index"
-    p current_user.store if user_signed_in?
-    @products = Product.all
+    # @all_products = Product.all
+    # @products = @all_products.paginate(page: params[:page])
+    # puts "HERE"
+    # pp @products
+    @products = Product.paginate(page: params[:page])
   end
 
   def show
@@ -124,6 +126,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :description, :availability, :category, :light, :difficulty, :price, :store_id, :image)
+      params.require(:product).permit(:name, :description, :availability, :category, :light, :difficulty, :price, :store_id, :image, :page)
     end
 end
