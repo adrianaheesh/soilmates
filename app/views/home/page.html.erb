@@ -1,2 +1,46 @@
-<h1>Home#page</h1>
-<p>Find me in app/views/home/page.html.erb</p>
+<h1>Welcome to Soilmates!</h1>
+
+<!-- sellers -->
+<div>
+    <h3>Our sellers:</h3>
+    <div class="card-container">
+        <% @stores.each do |store| %>
+            <div class="card" style="width: 18rem;">
+              <%= cl_image_tag(store.banner.key, crop: :scale, cloud_name: 'adriana-developer', class: "card-img-top") if store.banner.attached? %>
+              <div class="card-body">
+                <h5 class="card-title"><%= store.name %></h5>
+                <p><%= store.description %></p>
+                <%= link_to 'See this store', store %>
+              </div>
+            </div>
+        <% end %>
+    </div>
+    <button>
+        <%= link_to "View all sellers", stores_path %>
+    </button>
+</div>
+<br>
+
+<!-- newest products -->
+<div>
+    <h3>What's new:</h3>
+    <div class="card-container">
+        <% @new_products.each do |product| %>
+          <% if product.availability == true %>
+            <div class="card" style="width: 18rem;">
+              <%= cl_image_tag(product.image.key, crop: :scale, cloud_name: 'adriana-developer', class: "card-img-top") if product.image.attached? %>
+              <div class="card-body">
+                <h5 class="card-title"><%= product.name %></h5>
+                <%= link_to 'Shop', product %>
+              </div>
+            </div>
+            <% end %>
+        <% end %>
+    </div>
+    <button>
+        <%= link_to "Shop all products", products_path %>
+    </button>
+</div>
+<br>
+
+<!-- -->

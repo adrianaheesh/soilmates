@@ -39,11 +39,11 @@
   <%= @product.availability ? "✔️" : "❌" %>
 </p>
 
-<% if @user_owns_a_store == true %>
+<!-- if user is signed in and owns the store that owns these products -->
+<% if user_signed_in? && @user_owns_a_store && @product.store_id == current_user.store.id %>
   <td><%= link_to 'Edit', edit_product_path(@product) %></td>
   <td><%= link_to 'Destroy', @product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 <% end %>
-
 
 <p>
   <strong>From:</strong>
@@ -53,6 +53,8 @@
 <p>
   <% if @product.availability && user_signed_in? %>
     <button id="buy-now-button">Buy Now</button>
+  <% elsif user_signed_in? && @user_owns_a_store && @product.store_id == current_user.store.id %>
+    <button type="button" disabled>Buy Now</button>
   <% elsif !user_signed_in?  %>
   <p>Please <%= link_to "sign in", new_user_session_path %> to place an order.</p>
     <button type="button" disabled>Buy Now</button>
@@ -61,6 +63,7 @@
     <button type="button" disabled>Buy Now</button>
   <% end %>
 </p>
+
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>

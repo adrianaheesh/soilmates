@@ -8,6 +8,9 @@
             <li class="nav-item">
                 <%= link_to "Manage your store", store_path(current_user.store), class: "nav-link" %>
             </li>
+            <li class="nav-item">
+                <%= link_to "Create a new product", new_product_path, class: "nav-link" %>
+            </li>
         <% else %>
             <li class="nav-item">
                 <%= link_to "Create a store", new_store_path, class: "nav-link" %>

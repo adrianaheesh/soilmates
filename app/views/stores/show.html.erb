@@ -39,11 +39,19 @@
 <% end %>
 </div>
 
-<br><br>
 
 <!-- only store owner has these buttons -->
 <% if user_signed_in? && @user_owns_a_store && current_user.store.id == @store.id %>
-  <%= link_to 'Edit your store', edit_store_path(@store) %>
+<br>
+<div class="store-management-links">
+    <button>
+      <%= link_to "Add a new product", new_product_path %>
+    </button>
+  <button>
+    <%= link_to 'Edit your store', edit_store_path(@store) %>
+  </button>
+</div>
+<br>
 <% end %>
 
 <h5>Reviews:</h5>
