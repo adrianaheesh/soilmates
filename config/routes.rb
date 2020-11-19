@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  post 'orders/create', to: 'orders#create'
-  patch 'orders/:id/update', to: 'orders#update'
-  get 'orders/:id/show', to: 'orders#show'
   get 'favorites/update', to: 'favorites#update'
   get 'favorites/index', to: 'favorites#index', as: 'favorites'
   resources :products
