@@ -5,7 +5,7 @@ class StoreReviewsController < ApplicationController
   def create
     @store_review = @store.store_reviews.new(store_review_params)
     @store_review.user = current_user
-    @store_review.save!
+    @store_review.save
     redirect_back(fallback_location: root_path)
   end
 

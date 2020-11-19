@@ -9,6 +9,6 @@ class StoreReview < ApplicationRecord
   validates :comment, 
             presence: true,
             length: { maximum: 500 }
-  validates :user, 
+  validates :user,
             presence: true
 end

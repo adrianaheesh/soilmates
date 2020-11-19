@@ -1,11 +1,9 @@
 <h1>Your Favourites</h1>
   
-<% if @user_favorites == nil %>
+<% if @user_favorites == [] %>
     <p>You don't have any favourites yet.</p>
     <%= link_to "Continue shopping", products_path %>
-<% end %>
-<br>
-
+<% else %>
 <div class="card-container">
   <% @user_favorites.each do |product| %>
       <div class="card" style="width: 18rem;">
@@ -17,4 +15,6 @@
         </div>
       </div>
   <% end %>
+  <% end %>
+
 </div>

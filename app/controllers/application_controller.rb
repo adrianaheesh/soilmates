@@ -18,22 +18,4 @@ class ApplicationController < ActionController::Base
             return current_user.store ? @user_owns_a_store = true : @user_owns_a_store = false
         end
     end
-    # if @current_users_store != nil
-        # && current_user.id == @current_users_store.user_id
-        # @user_owns_a_store = true
-    
-    # return the current users store or nil if none
-    # def set_current_users_store
-    #     @user_owns_a_store = false
-    #     if user_signed_in? 
-    #         # check for store
-    #         current_user.store.id ? @user_owns_a_store = true : @user_owns_a_store = false
-    #         if @user_owns_a_store
-
-    #         puts "LOOK HERE"
-    #         pp @user_owns_a_store
-    #       puts "or maybe here"
-    #       pp @current_users_store
-    #     end
-    #   end
   end
