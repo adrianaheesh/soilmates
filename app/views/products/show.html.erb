@@ -23,17 +23,20 @@
 </p>
 
 <p>
+  <% if @product.light %>
+  This plant requires <%=@product.light.downcase%> light.
+  <% end %>
+</p>
+
+<p>
+  <% if @product.difficulty %>
+  Suitable for a "<%=@product.difficulty.downcase%>".
+  <% end %>
+</p>
+
+<p>
   <strong>Available?</strong>
   <%= @product.availability ? "✔️" : "❌" %>
-</p>
-
-<p>
-  <% @product.light if @product.light != nil %>
-</p>
-
-<!-- make a partial for a difficulty scale? -->
-<p>
-  <% @product.difficulty if @product.difficulty != nil %>
 </p>
 
 <% if @user_owns_a_store == true %>
@@ -48,10 +51,13 @@
 </p>
 
 <p>
-  <% if @product.availability %>
+  <% if @product.availability && user_signed_in? %>
     <button id="buy-now-button">Buy Now</button>
-  <% else %>
-    Product sold out.
+  <% elsif !user_signed_in?  %>
+  <p>Please <%= link_to "sign in", new_user_session_path %> to place an order.</p>
+    <button type="button" disabled>Buy Now</button>
+  <% elsif !@product.availability && user_signed_in? %>
+    <p>Product sold out.</p> 
     <button type="button" disabled>Buy Now</button>
   <% end %>
 </p>

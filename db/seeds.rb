@@ -51,7 +51,7 @@ product = Product.new(
             store_id: Store.find_by_name("Plant Parenthood").id,
             category: "Plant",
             light: "Bright",
-            difficulty: "Plant Beginner"
+            difficulty: "Plant beginner"
             )
 product.image.attach(
             io: File.open(Rails.root.join('app/assets/images/8.png')),
@@ -68,7 +68,7 @@ product2 = Product.new(
             store_id: Store.find_by_name("Plant Parenthood").id,
             category: "Plant",
             light: "Bright",
-            difficulty: "Plant Beginner"
+            difficulty: "Plant beginner"
         )
 product2.image.attach(
             io: File.open(Rails.root.join('app/assets/images/3.png')),
@@ -100,7 +100,7 @@ product4 = Product.new(
             store_id: Store.find_by_name("Plant Posse").id,
             category: "Plant",
             light: "Bright",
-            difficulty: "Have kept a few plants alive"
+            difficulty: "Mildly smug"
             )
 product4.image.attach(
             io: File.open(Rails.root.join('app/assets/images/4.png')),
@@ -117,7 +117,7 @@ product5 = Product.new(
             store_id: Store.find_by_name("Plant Posse").id,
             category: "Plant",
             light: "Medium",
-            difficulty: "Have kept a few plants alive"
+            difficulty: "Mildly smug"
             )
 product5.image.attach(
             io: File.open(Rails.root.join('app/assets/images/5.png')),
@@ -134,7 +134,7 @@ product6 = Product.new(
             store_id: Store.find_by_name("Plant Posse").id,
             category: "Plant",
             light: "Low",
-            difficulty: "Plant Beginner"
+            difficulty: "Plant beginner"
             )
 product6.image.attach(
             io: File.open(Rails.root.join('app/assets/images/6.png')),
@@ -142,3 +142,4 @@ product6.image.attach(
             content_type: 'image/png'
 )
 product6.save!
+

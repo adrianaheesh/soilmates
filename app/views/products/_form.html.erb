@@ -9,7 +9,7 @@
     <%= f.input :availability, label: "Available now?" %>
     <%= f.input :category, collection: ["Plant", "Pot", "Plant Care", "Accessories", "Tools"], as: :radio_buttons %>
     <%= f.input :light, collection: ["Low", "Medium", "Bright"], as: :radio_buttons %>
-    <%= f.input :difficulty, collection: ["Plant Beginner", "Have kept a few plants alive", "Full blown #plantfluencer"], as: :radio_buttons %>
+    <%= f.input :difficulty, collection: ["Plant beginner", "Mildly smug", "Full blown #plantfluencer"], as: :radio_buttons %>
     <%= f.input :price %>
     <%= f.file_field :image, accept: 'image/png, image/jpg, image/jpeg' %>
   </div>
